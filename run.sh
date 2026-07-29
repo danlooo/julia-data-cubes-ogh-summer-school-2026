@@ -1,0 +1,1 @@
+quarto render main.qmd --to revealjs -o index.html

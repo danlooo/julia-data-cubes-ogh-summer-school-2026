@@ -1,0 +1,112 @@
+---
+title: Data Cubes in Julia
+subtitle: "Earth Observation Summer School 2026"
+author:
+  - name: Daniel Loos
+    orcid: 0000-0002-4024-4443
+    affiliations:
+      - name: Max Planck Institute for Biogeochemistry<br>Jena, Germany
+        city: Jena
+        country: Germany
+  - name: Felix Cremer
+    orcid: 0000-0001-8659-4361
+    affiliations:
+      - name: Max Planck Institute for Biogeochemistry<br>Jena, Germany
+        city: Jena
+        country: Germany
+  - name: Maarten Pronk
+format:
+  revealjs:
+    theme: [simple, main.scss]
+    transition: slide
+    slide-number: true
+    width: 1280
+    height: 720
+    footer: "Daniel Loos: Introduction to Julia"
+execute:
+  echo: true
+---
+
+## Access
+
+#### These Slides
+
+https://danlooo.github.io/julia-data-cubes-ogh-summer-school-2026
+![](assets/slides-link-qr.png)
+
+#### Julia Terminal
+
+https://www.jdoodle.com/online-compiler-julia
+
+## Agenda
+
+1. Recap: Introduction to Julia
+1. Geocomputation with Julia: Projection, raster and vector data
+1. YAXArrays.jl
+1. DGGS.jl
+
+## Who is Julia?
+
+::::: {.columns}
+
+::: {.column width="60%"}
+- High-performance programming language
+- Designed for scientific computing
+- Easy to learn, fast to run
+- Dynamic typing like Python
+- Speed approaching C
+- Great for data science, math, and more
+- Multi-paradigm: Functional, procedural, typed
+:::
+
+::: {.column width="40%"}
+![](assets/Julia_prog_language.svg.png)
+:::
+
+:::::
+
+## Why Julia?
+
+- **Fast**: Just-in-time compilation, near-C performance
+- **Easy**: Clean syntax, readable code
+- **Dynamic**: Interactive REPL, flexible types
+- **Ecosystem getting richer**: 10,000+ packages
+
+
+## The Two Language Problem
+
+::::: {.columns}
+
+::: {.column width="60%"}
+Usually, one needs two languages
+
+- One to prototype: Python, R
+- Another one to make it fast: C++, Fortran
+
+This makes it complicated to write and debug.
+:::
+
+::: {.column width="40%"}
+![](assets/python-car.jpg)
+:::
+
+:::::
+
+## Julia Benchmarks
+
+https://github.com/kadyb/raster-benchmark
+
+![](assets/raster-benchmark.png)
+
+## Julia Benchmarks
+
+https://github.com/kadyb/vector-benchmark
+
+![](assets/vector-benchmark.png)
+
+## DGGS.jl 
+
+https://github.com/danlooo/DGGS.jl
+
+
+[slides](dggs-jl.pdf)
