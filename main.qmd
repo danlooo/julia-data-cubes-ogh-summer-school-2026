@@ -42,6 +42,7 @@ https://www.jdoodle.com/online-compiler-julia
 
 1. Recap: Introduction to Julia
 1. Geocomputation with Julia: Projection, raster and vector data
+1. Data Cubes
 1. YAXArrays.jl
 1. DGGS.jl
 
@@ -104,9 +105,40 @@ https://github.com/kadyb/vector-benchmark
 
 ![](assets/vector-benchmark.png)
 
+## Projection
+
+## Raster Data
+
+## Vector Data
+
+## Data Cubes
+
+::::: {.columns}
+
+::: {.column width="60%"}
+- feature values: Everywhere, at any time
+- stored in big arrays on disk
+- better: data hyper-cuboid
+- like maps but often chunked in time
+:::
+
+::: {.column width="40%"}
+![](assets/data-cube.png)
+:::
+
+:::::
+
+
+## YAXArrays.jl 
+
 ## DGGS.jl 
 
 https://github.com/danlooo/DGGS.jl
 
-
 [slides](dggs-jl.pdf)
+
+## Resources
+
+- Geocomputation with Julia (in progress): https://jl.geocompx.org/
+- YAXArrays docs: https://juliadatacubes.github.io/YAXArrays.jl
+- DGGS.jl docs: https://danlooo.github.io/DGGS.jl
