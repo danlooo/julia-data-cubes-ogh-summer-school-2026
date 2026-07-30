@@ -1,0 +1,1 @@
+{"missing_value":-32767,"name":"tp","units":"m","add_offset":0.03158902601693457,"long_name":"Total precipitation","_ARRAY_DIMENSIONS":["time","latitude","longitude"],"scale_factor":9.640794121020136e-7,"aggfun":"sum","_FillValue":-32767.0}

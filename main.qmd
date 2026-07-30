@@ -35,9 +35,6 @@ engine: julia
 https://danlooo.github.io/julia-data-cubes-ogh-summer-school-2026
 ![](assets/slides-link-qr.png)
 
-#### Julia Terminal
-
-https://www.jdoodle.com/online-compiler-julia
 
 ## Project Environment
 
@@ -55,6 +52,9 @@ Download and load all packages in Julia:
 using Pkg
 Pkg.instantiate()
 ```
+
+- This is meant as an future exercise 
+- Doing this probably takes way longer than this talk
 
 ## Agenda
 
@@ -162,7 +162,7 @@ using GeoDataFrames
 df = GeoDataFrames.read("data/continents.geojson")
 ```
 
-## Plotting
+## Plot Vectors
 
 Makie is a comprehensive Julia package for plotting:
 
@@ -174,6 +174,8 @@ plot(df.geometry)
 ## Raster Data
 
 ## Load Raster
+
+Most raster julia packages use `ArchGDAL` to use GDAL to load the data:
 
 ```{julia}
 using Rasters
@@ -190,6 +192,24 @@ using Makie package again:
 plot(raster; colormap=:deep)
 ```
 
+## Get a Spatial Dimension
+
+```{julia}
+lon = lookup(raster, X)
+```
+
+## Subset a Region
+
+```{julia}
+@time sub = view(raster, X(-113.2 .. -113.0), Y(37.2 .. 37.5))
+```
+
+## Compute
+
+```{julia}
+Float32.(raster) * 2
+```
+
 ## Data Cubes
 
 ::::: {.columns}
@@ -199,6 +219,7 @@ plot(raster; colormap=:deep)
 - stored in big arrays on disk
 - better: data hyper-cuboid
 - like maps but often chunked in time
+- technical: array with named dimensions
 :::
 
 ::: {.column width="40%"}
@@ -207,8 +228,59 @@ plot(raster; colormap=:deep)
 
 :::::
 
+## Data Cube File Formats
 
-## YAXArrays.jl 
+- mostly based on the NetCDF Data Model
+- examples: NetCDF, Zarr, Folder of TIFs
+- virtual data cubes
+  - Python `stackstack` let STAC collections present as `xarray.DataArray`
+  - Python `kerchunk` let files of different formats present as Zarr
+- a *true* data cube has no gaps and allows chunking in any dimension
+
+## Data Cube Framework in Julia
+
+Like previous Rasters.jl, most Julia packages use DimensionalData to describe arrays and axes.
+
+![](assets/dimensional-data.png)
+
+## Overview: Data Cube Packages Based on DimensionalData
+
+| Package | Description |
+| --- | --- |
+| `Rasters` | Maps at a single time point in memory |
+| `DimensionalData` | Simple data cubes in memory |
+| `DiskArrays` | Spatiotemporal arrays on disk |
+| `YAXArrays` | Spatiotemporal arrays on disk and in memory |
+| `DGGS` | Spatiotemporal arrays on disk and in memory on a DGGS |
+
+## YAXArrays.jl
+
+![](assets/yaxarrays.png)
+
+## Time Series Analysis on ERA5 Using YAXArrays
+
+```{julia}
+using YAXArrays
+using Zarr
+ds = open_dataset("data/era5.zarr")
+```
+
+## Show Air Temperature at 2m
+
+```{julia}
+temperature = ds.t2m
+```
+
+## Calculate Regional Mean Temperature
+
+Average temperature over all spatial points:
+
+```{julia}
+using Statistics
+mean_temperature = mapslices(mean, temperature; dims=(:longitude, :latitude))
+```
+
+This reduces the dimensions of the array, yielding a *de facto* vector of time points.
 
 ## DGGS.jl 
 

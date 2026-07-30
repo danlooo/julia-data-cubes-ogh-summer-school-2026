@@ -1,0 +1,1 @@
+{"missing_value":-32767,"name":"t2m","units":"K","add_offset":268.0354929864884,"long_name":"2 metre temperature","_ARRAY_DIMENSIONS":["time","latitude","longitude"],"scale_factor":0.001600086593494046,"aggfun":"maximum","_FillValue":-32767.0}
