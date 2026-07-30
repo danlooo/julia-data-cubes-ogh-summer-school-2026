@@ -22,9 +22,10 @@ format:
     slide-number: true
     width: 1280
     height: 720
-    footer: "Daniel Loos: Introduction to Julia"
+    footer: "Daniel Loos: Data Cubes in Julia"
 execute:
   echo: true
+engine: julia
 ---
 
 ## Access
@@ -37,6 +38,23 @@ https://danlooo.github.io/julia-data-cubes-ogh-summer-school-2026
 #### Julia Terminal
 
 https://www.jdoodle.com/online-compiler-julia
+
+## Project Environment
+
+- This presentation uses additional packages and data that need to be installed
+- The environment were defined in the file `Project.toml` of the GitHub repository
+
+```bash
+git clone https://github.com/danlooo/julia-data-cubes-ogh-summer-school-2026.git
+cd julia-data-cubes-ogh-summer-school-2026.git
+julia --project=.
+```
+Download and load all packages in Julia:
+
+```julia
+using Pkg
+Pkg.instantiate()
+```
 
 ## Agenda
 
@@ -105,11 +123,72 @@ https://github.com/kadyb/vector-benchmark
 
 ![](assets/vector-benchmark.png)
 
+## JuliaGeo
+
+Most important geospatial packages: https://juliageo.org
+
+![](assets/julia-geo-logo.png){height=150px}
+
+![](assets/julia-geo-popular-packages.png)
+
+## JuliaGeo Talks
+
+- [FOSS4G2019 | JuliaGeo: A Fresh Approach to GeospatialComputing](https://media.ccc.de/v/bucharest-428-juliageo-a-fresh-approach-to-geospatial-computing)
+- [JuliaCon2020 | GeoInterface: bringing geospatial packages together](https://www.youtube.com/watch?v=wih_DIWODUs)
+- [JuliaCon2022 | State of JuliaGeo](https://www.youtube.com/watch?v=xMRcIpt6Ris)
+- [JuliaCon2024 | What’s new with GeoInterface.jl: traits for interoperability](https://www.youtube.com/watch?v=X6UEHg5zjf4)
+
 ## Projection
+
+Project coordinates across different projections using PROJ:
+
+```{julia}
+using Pkg
+Pkg.activate(".")
+
+using Proj
+trans = Proj.Transformation("EPSG:4326", "+proj=utm +zone=32 +datum=WGS84")
+trans(55, 12)
+```
+
+```{julia}
+inv(trans)(691875.632137542, 6.098907825129169e6)
+```
+
+## Vector Data
+
+```{julia}
+using GeoDataFrames
+df = GeoDataFrames.read("data/continents.geojson")
+```
+
+## Plotting
+
+Makie is a comprehensive Julia package for plotting:
+
+```{julia}
+using CairoMakie
+plot(df.geometry)
+```
 
 ## Raster Data
 
-## Vector Data
+## Load Raster
+
+```{julia}
+using Rasters
+using ArchGDAL
+
+raster = Raster("data/srtm.tif")
+```
+
+## Plot Raster
+
+using Makie package again:
+
+```{julia}
+plot(raster; colormap=:deep)
+```
 
 ## Data Cubes
 
