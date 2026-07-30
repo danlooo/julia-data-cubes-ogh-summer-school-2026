@@ -271,6 +271,45 @@ ds = open_dataset("data/era5.zarr")
 temperature = ds.t2m
 ```
 
+## Subset Air Temperature
+
+Subset first time point:
+
+```{julia}
+start_temperature = temperature[time=1]
+```
+
+Subset a speciific date:
+
+```{julia}
+temperature[time=At(Date("2020-12-21"))];
+```
+
+## Plot Map
+
+```{julia}
+plot(start_temperature)
+```
+
+## Create YAXArrays from scratch
+
+```{julia}
+axes = (X(1:3), Y(1:4))
+data = rand(3, 4)
+properties = Dict("long_name" => "Random test data", "use_case" => missing)
+a = YAXArray(axes, data, properties)
+```
+
+## Chunking
+
+- Data is usually stored in compressed chunks on disk
+- One needs to load the entire chunk even if a single pixel is needed
+- One can define chunking on write
+- One can optimize for one of the use cases:
+  - Requet single maps at a given time point
+  - Request entire time series for a given pixel
+- Sometimes its better to save two copies of the data with different chunking
+
 ## Calculate Regional Mean Temperature
 
 Average temperature over all spatial points:
@@ -280,7 +319,28 @@ using Statistics
 mean_temperature = mapslices(mean, temperature; dims=(:longitude, :latitude))
 ```
 
-This reduces the dimensions of the array, yielding a *de facto* vector of time points.
+This preserves dimensions yielding a 1×1×2192 array
+
+Convert it into a real vector:
+
+```{julia}
+mean_temperature = mean_temperature[longitude=1, latitude=1]
+```
+
+## Plot Regional Mean Temperature
+
+```{julia}
+title = begin
+    temperature.properties["long_name"] *
+    ", regional mean (" *
+    temperature.properties["units"] * ")"
+end
+
+fig, ax, plt = plot(mean_temperature)
+ax.title = title
+fig
+```
+
 
 ## DGGS.jl 
 
