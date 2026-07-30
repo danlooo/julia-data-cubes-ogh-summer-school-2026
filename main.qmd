@@ -39,7 +39,7 @@ https://danlooo.github.io/julia-data-cubes-ogh-summer-school-2026
 ## Project Environment
 
 - This presentation uses additional packages and data that need to be installed
-- The environment were defined in the file `Project.toml` of the GitHub repository
+- The environment was defined in the file `Project.toml` of the GitHub repository
 
 ```bash
 git clone https://github.com/danlooo/julia-data-cubes-ogh-summer-school-2026.git
@@ -279,7 +279,7 @@ Subset first time point:
 start_temperature = temperature[time=1]
 ```
 
-Subset a speciific date:
+Subset a specific date:
 
 ```{julia}
 temperature[time=At(Date("2020-12-21"))];
@@ -306,7 +306,7 @@ a = YAXArray(axes, data, properties)
 - One needs to load the entire chunk even if a single pixel is needed
 - One can define chunking on write
 - One can optimize for one of the use cases:
-  - Requet single maps at a given time point
+  - Request single maps at a given time point
   - Request entire time series for a given pixel
 - Sometimes its better to save two copies of the data with different chunking
 
