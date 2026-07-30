@@ -22,9 +22,17 @@ jobs:
 
             - uses: quarto-dev/quarto-actions/setup@v2
 
+            - uses: julia-actions/setup-julia@v2
+              with:
+                  version: "1"
+
+            - uses: julia-actions/cache@v2
+
             - uses: actions/configure-pages@v5
 
-            - run: quarto render main.qmd --to revealjs -o index.html
+            - run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+
+            - run: JULIA_PROJECT=@. quarto render main.qmd --to revealjs -o index.html
 
             - uses: actions/upload-pages-artifact@v3
               with:
