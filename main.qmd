@@ -257,6 +257,32 @@ Like previous Rasters.jl, most Julia packages use DimensionalData to describe ar
 
 ![](assets/yaxarrays.png)
 
+## YAXArray
+
+- `YAXArray` is a variable in the NetCDF data model
+- stores values of the same element type and dimensions
+- Use CF conventions as attributes whenever possible
+
+```{julia}
+using YAXArrays
+using DimensionalData
+data = [10.1 10.2 10.3; 10.4 10.5 10.6]
+axes = (X([-180, 180]), Y(range(-90, 90, 3)))
+properties = Dict("standard_name" => "air_temperature", "units"=>"degC")
+a = YAXArray(axes, data, properties)
+```
+
+## Dataset
+
+- `Dataset` is a set of `YAXArrays` that may share dimensions
+- can be composed of arrays
+
+```{julia}
+using YAXArrays
+using Zarr
+ds = open_dataset("data/era5.zarr")
+```
+
 ## Time Series Analysis on ERA5 Using YAXArrays
 
 ```{julia}
